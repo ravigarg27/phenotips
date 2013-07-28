@@ -19,24 +19,26 @@
  */
 package org.phenotips.ontology.internal.solr;
 
+import org.phenotips.ontology.OntologyTerm;
+
+import org.xwiki.component.annotation.Component;
+
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import org.phenotips.ontology.OntologyTerm;
-import org.xwiki.component.annotation.Component;
-
-
 /**
  * Provides access to the Human Phenotype Ontology (HPO). The ontology prefix is {@code HP}.
  * 
  * @version $Id$
+ * @since 1.0M8
  */
 @Component
-@Named("HP")
+@Named("hpo")
 @Singleton
 public class HumanPhenotypeOntology extends AbstractSolrOntologyService
 {
@@ -63,6 +65,16 @@ public class HumanPhenotypeOntology extends AbstractSolrOntologyService
                 result = search(queryParameters).iterator().next();
             }
         }
+        return result;
+    }
+
+    @Override
+    public Set<String> getAliases()
+    {
+        Set<String> result = new HashSet<String>();
+        result.add(getName());
+        result.add("HP");
+        result.add("HPO");
         return result;
     }
 }

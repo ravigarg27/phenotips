@@ -19,17 +19,20 @@
  */
 package org.phenotips.ontology;
 
+import org.xwiki.component.annotation.Role;
+import org.xwiki.stability.Unstable;
+
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
-
-import org.xwiki.component.annotation.Role;
 
 /**
  * Provides access to an ontology, such as the Human Phenotype Ontology.
  * 
  * @version $Id$
+ * @since 1.0M8
  */
+@Unstable
 @Role
 public interface OntologyService
 {
@@ -58,5 +61,19 @@ public interface OntologyService
      *            single value, or a collection of values that can (OR) be matched by the term;
      * @return a set with the matching terms that were found in the ontology, an empty set if no terms were found
      */
-    Set<OntologyTerm> search(Map<String, ? > fieldValues);
+    Set<OntologyTerm> search(Map<String, ?> fieldValues);
+
+    /**
+     * An ontology has an official name, but it can also have other aliases, for example the Human Phenotype Ontology is
+     * known both as {@code HP}, which is the official prefix for its terms, {@code HPO}, which is its acronym, or the
+     * lowercase {@code hpo}.
+     * 
+     * @return a set of identifiers which can be used to reference this ontology, including the official name
+     */
+    Set<String> getAliases();
+
+    /**
+     * Reindex the whole ontology, fetching the latest version from the source.
+     */
+    void reindex();
 }
